@@ -1,0 +1,47 @@
+<div class="board">
+  <!-- TITLE -->
+  <div class="title">
+    <h4>Angular Chess</h4>
+  </div>
+  <!-- LETTERS -->
+  <div class="letters top">
+    <div *ngFor="let letter of letters">{{ letter }}</div>
+  </div>
+  <!-- NUMBERS -->
+  <div class="numbers left">
+    <div *ngFor="let number of numbers">{{ number }}</div>
+  </div>
+  <!-- BOARD -->
+  <div class="chessboard">
+    <div *ngFor="let row of chessBoard; let rowIndex = index" class="row">
+      <app-cell></app-cell>
+      <div
+        class="column"
+        *ngFor="let cell of row; let columnIndex = index"
+        [ngClass]="{
+          black: isBlack(rowIndex, columnIndex),
+          white: isWhite(rowIndex, columnIndex)
+        }"
+        [attr.cell-name]="cell.cell"
+        [attr.valid-move]="cell.validMove"
+        [attr.ready-to-move]="cell.readyToMove"
+        (click)="handleClick(cell, cell.validMove)"
+      >
+        <!-- <span [ngClass]="cell.piece.color">{{ cell.piece.icon }}</span> -->
+        <ng-template [ngIf]="cell.isOccupied">
+          <span [ngClass]="cell.piece.color">{{ cell.piece.icon }}</span>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <!-- NUMBERS -->
+  <div class="numbers right">
+    <div *ngFor="let number of numbers">{{ number }}</div>
+  </div>
+  <!-- LETTERS -->
+  <div class="letters bottom">
+    <div *ngFor="let letter of letters">{{ letter }}</div>
+  </div>
+</div>
+
+

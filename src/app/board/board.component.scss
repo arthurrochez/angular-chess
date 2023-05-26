@@ -1,0 +1,118 @@
+$white: #e9e9e9;
+$black: #404040;
+$move: #A4D0A4;
+$case: 75px;
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, $case);
+  grid-template-rows: repeat(10, $case);
+  .title {
+    grid-row: 1;
+    grid-column: 1;
+  }
+  .letters {
+    grid-column: 2 / 10;
+    display: flex;
+    &.top {
+      grid-row: 1;
+    }
+    &.bottom {
+      grid-row: 10;
+    }
+    & > div {
+      width: $case;
+      height: $case;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+    }
+  }
+  .numbers {
+    grid-row: 2 / 10;
+    display: flex;
+    flex-direction: column-reverse;
+    &.left {
+      grid-column: 1;
+    }
+    &.right {
+      grid-column: 10;
+    }
+    & > div {
+      width: $case;
+      height: $case;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 30px;
+    }
+  }
+  .chessboard {
+    grid-row: 2 / 10;
+    grid-column: 2/10;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+    width: calc(8 * $case);
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      .column {
+        width: $case;
+        height: $case;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &.black {
+          background-color: $black;
+          color: $white;
+        }
+        &.white {
+          background-color: $white;
+          color: $black;
+        }
+        & > span {
+          font-size: 50px;
+          cursor: pointer;
+          &.white {
+            color: $white;
+            text-shadow: 1px 0 $black, -1px 0 $black, 0 1px $black,
+              0 -1px $black, 1px 1px $black, -1px -1px $black, 1px -1px $black,
+              -1px 1px $black;
+          }
+          &.black {
+            color: $black;
+            text-shadow: 1px 0 $white, -1px 0 $white, 0 1px $white,
+              0 -1px $white, 1px 1px $white, -1px -1px $white, 1px -1px $white,
+              -1px 1px $white;
+          }
+        }
+        &[valid-move="true"] {
+          position: relative;
+          cursor: pointer;
+          &::after{
+            content: '';
+            width: 100%;
+            height: 100%;
+            background-color: $move;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: .75;
+          }
+        }
+        &[ready-to-move="true"] {
+          & > span{
+            color: $move;
+            &.black {
+              text-shadow: 1px 0 $black, -1px 0 $black, 0 1px $black,
+                0 -1px $black, 1px 1px $black, -1px -1px $black, 1px -1px $black,
+                -1px 1px $black;
+            }
+          }
+        }
+      }
+    }
+  }
+}
