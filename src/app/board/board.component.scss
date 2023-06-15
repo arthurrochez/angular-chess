@@ -1,6 +1,7 @@
 $white: #e9e9e9;
 $black: #404040;
-$move: #A4D0A4;
+$move: #a4d0a4;
+$capturable: #ffb6b9;
 $case: 75px;
 
 .board {
@@ -75,6 +76,7 @@ $case: 75px;
         & > span {
           font-size: 50px;
           cursor: pointer;
+          z-index: 9;
           &.white {
             color: $white;
             text-shadow: 1px 0 $black, -1px 0 $black, 0 1px $black,
@@ -91,25 +93,50 @@ $case: 75px;
         &[valid-move="true"] {
           position: relative;
           cursor: pointer;
-          &::after{
-            content: '';
+          &::after {
+            content: "";
             width: 100%;
             height: 100%;
             background-color: $move;
             position: absolute;
             top: 0;
             left: 0;
-            opacity: .75;
+            opacity: 0.75;
           }
         }
         &[ready-to-move="true"] {
-          & > span{
-            color: $move;
-            &.black {
-              text-shadow: 1px 0 $black, -1px 0 $black, 0 1px $black,
-                0 -1px $black, 1px 1px $black, -1px -1px $black, 1px -1px $black,
-                -1px 1px $black;
-            }
+          & > span {
+            // color: $move;
+            // &.black {
+            //   text-shadow: 1px 0 $black, -1px 0 $black, 0 1px $black,
+            //     0 -1px $black, 1px 1px $black, -1px -1px $black, 1px -1px $black,
+            //     -1px 1px $black;
+            // }
+          }
+          position: relative;
+          &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: $move;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.75;
+          }
+        }
+        &[is-capturable="true"] {
+          position: relative;
+          cursor: pointer;
+          &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: $capturable;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.75;
           }
         }
       }

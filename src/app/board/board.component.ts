@@ -21,9 +21,11 @@ export class BoardComponent {
   chessBoard: Cell[][] = [];
   pieces: (Pawn | Knight | Rook | Bishop | King | Queen)[] = [];
   activePiece: Piece | {} = {};
+  activeColor: string = '';
   previousCell: Cell | {} = {};
   nextCell: Cell | {} = {};
   validMoves: string[] = [];
+  capturableCell: Cell | {} = {};
 
   constructor(
     private boardService: boardService,
@@ -67,20 +69,30 @@ export class BoardComponent {
     });
   }
 
-  handleClick(cell: Cell, isValidMove: boolean) {
+  handleClick(cell: Cell, isValidMove: boolean, isCapturable: boolean) {
     if (cell.piece instanceof Piece) {
-      this.getMoves(cell.piece as Piece);
+      if(!isCapturable){
+        this.resetCapturables();
+        this.getMoves(cell.piece as Piece);
+      } else {
+        this.resetCapturables();
+        this.nextCell = cell;
+        this.capture();
+      }
     } else if (isValidMove) {
       this.nextCell = cell;
       this.movePiece();
+      this.resetCapturables();
     } else {
       this.resetHighlights();
+      this.resetCapturables();
     }
   }
 
   getMoves(piece: Piece): void {
     this.resetHighlights();
     this.activePiece = piece;
+    this.activeColor = piece.color;
     this.validMoves = piece.getValidMoves();
     // console.log(validMoves);
     this.chessBoard.forEach((row) => {
@@ -89,11 +101,33 @@ export class BoardComponent {
           cell.readyToMove = true;
           this.previousCell = cell;
         }
-        if (this.validMoves.includes(cell.cell) && cell.isOccupied === false) {
-          cell.validMove = true;
+        if (this.validMoves.includes(cell.cell)) {
+          if (cell.isOccupied === false) {
+            cell.validMove = true;
+          } else {
+            this.getCapturablePieces(cell);
+          }
         }
       });
     });
+    // console.log(this.chessBoard);
+  }
+
+  getCapturablePieces(cell: Cell): void {
+    // console.log('méthode capture');
+    // console.log(this.activePiece);
+    // console.log(cell);
+    // console.log(this.activeColor);
+    if (cell.piece instanceof Piece) {
+      if(cell.piece.color != this.activeColor){
+        cell.isCapturable = true;
+      }
+    }
+  }
+
+  capture(){
+    this.movePiece();
+    console.log('miam');
     // console.log(this.chessBoard);
   }
 
@@ -106,25 +140,31 @@ export class BoardComponent {
     });
   }
 
+  resetCapturables() {
+    this.chessBoard.forEach((row) => {
+      row.forEach((cell) => {
+        cell.isCapturable = false;
+      });
+    });
+  }
+
   movePiece() {
-    console.log(this.activePiece);
-    console.log(this.previousCell);
-    console.log(this.nextCell);
+    // console.log(this.activePiece);
+    // console.log(this.previousCell);
+    // console.log(this.nextCell);
     (this.activePiece as Piece).location = (this.nextCell as Cell).cell;
     (this.previousCell as Cell).piece = {};
     (this.previousCell as Cell).isOccupied = false;
     (this.nextCell as Cell).piece = this.activePiece;
     (this.nextCell as Cell).isOccupied = true;
     this.resetHighlights();
-    console.log(this.chessBoard);
+    // console.log(this.chessBoard);
   }
 }
-
 
 // CREER COMP CELL & PIECE
 // DIVISER EN PLUS PETITS FICHIERS
 // TOUR BLANC ET TOUR NOIR
-
 
 // API FIREBASE (ex : chat)
 // PACKAGE.JSON
@@ -143,6 +183,3 @@ export class BoardComponent {
 // REFERENCE
 
 // FRONT END ENGINEER
-
-
-

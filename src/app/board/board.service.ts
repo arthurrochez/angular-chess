@@ -25,7 +25,8 @@ export class boardService {
             piece: {},
             isOccupied: false,
             validMove: false,
-            readyToMove: false
+            readyToMove: false,
+            isCapturable: false
           }
         );
       }

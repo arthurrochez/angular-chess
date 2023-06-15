@@ -7,5 +7,6 @@ export class Cell {
     public isOccupied: boolean,
     public validMove: boolean,
     public readyToMove: boolean,
+    public isCapturable: boolean,
   ) {}
 }

@@ -4,7 +4,5 @@ export abstract class Piece {
     public location: string
   ) {}
 
-
-
   public  abstract getValidMoves(): string[];
 }

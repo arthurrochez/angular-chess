@@ -25,7 +25,8 @@
         [attr.cell-name]="cell.cell"
         [attr.valid-move]="cell.validMove"
         [attr.ready-to-move]="cell.readyToMove"
-        (click)="handleClick(cell, cell.validMove)"
+        [attr.is-capturable]="cell.isCapturable"
+        (click)="handleClick(cell, cell.validMove, cell.isCapturable)"
       >
         <!-- <span [ngClass]="cell.piece.color">{{ cell.piece.icon }}</span> -->
         <ng-template [ngIf]="cell.isOccupied">
