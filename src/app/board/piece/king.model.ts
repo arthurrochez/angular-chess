@@ -13,17 +13,26 @@ export class King extends Piece {
     );
   }
 
-  override getValidMoves(): string[] {
+  override getValidMoves() {
+    const validMoves = [];
+    const possibleMoves = [
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 0, y: 1 },
+      { x: -1, y: 1 },
+      { x: -1, y: -1 },
+      { x: -1, y: 0 },
+      { x: -1, y: -1 },
+      { x: 0, y: -1 },
+      { x: 1, y: -1 }
+    ];
 
-    const validMoves: string[] = [];
-
-    if (this.color === 'white') {
-      const nextRow = Number(this.location[1]) + 1;
-      const nextPosition = `${this.location[0]}${nextRow}`;
-      validMoves.push(nextPosition);
-    } else {
-      const nextRow = Number(this.location[1]) - 1;
-      const nextPosition = `${this.location[0]}${nextRow}`;
+    for (const move of possibleMoves) {
+      const nextColumn = String.fromCharCode(
+        this.location[0].charCodeAt(0) + move.x
+      );
+      const nextRow = Number(this.location[1]) + move.y;
+      const nextPosition = `${nextColumn}${nextRow}`;
       validMoves.push(nextPosition);
     }
 

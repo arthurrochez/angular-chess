@@ -13,17 +13,45 @@ export class Bishop extends Piece {
     );
   }
 
-  override getValidMoves(): string[] {
+  override getValidMoves() {
+    const validMoves = [];
+    const possibleMoves = [
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: 3, y: 3 },
+      { x: 4, y: 4 },
+      { x: 5, y: 5 },
+      { x: 6, y: 6 },
+      { x: 7, y: 7 },
+      { x: 1, y: -1 },
+      { x: 2, y: -2 },
+      { x: 3, y: -3 },
+      { x: 4, y: -4 },
+      { x: 5, y: -5 },
+      { x: 6, y: -6 },
+      { x: 7, y: -7 },
+      { x: -1, y: 1 },
+      { x: -2, y: 2 },
+      { x: -3, y: 3 },
+      { x: -4, y: 4 },
+      { x: -5, y: 5 },
+      { x: -6, y: 6 },
+      { x: -7, y: 7 },
+      { x: -1, y: -1 },
+      { x: -2, y: -2 },
+      { x: -3, y: -3 },
+      { x: -4, y: -4 },
+      { x: -5, y: -5 },
+      { x: -6, y: -6 },
+      { x: -7, y: -7 }
+    ];
 
-    const validMoves: string[] = [];
-
-    if (this.color === 'white') {
-      const nextRow = Number(this.location[1]) + 1;
-      const nextPosition = `${this.location[0]}${nextRow}`;
-      validMoves.push(nextPosition);
-    } else {
-      const nextRow = Number(this.location[1]) - 1;
-      const nextPosition = `${this.location[0]}${nextRow}`;
+    for (const move of possibleMoves) {
+      const nextColumn = String.fromCharCode(
+        this.location[0].charCodeAt(0) + move.x
+      );
+      const nextRow = Number(this.location[1]) + move.y;
+      const nextPosition = `${nextColumn}${nextRow}`;
       validMoves.push(nextPosition);
     }
 

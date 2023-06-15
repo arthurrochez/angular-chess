@@ -10,7 +10,7 @@ export class Knight extends Piece {
     super(color, location);
   }
 
-  getValidMoves() {
+  override getValidMoves() {
     const validMoves = [];
     const possibleMoves = [
       { x: 1, y: 2 },
